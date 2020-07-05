@@ -42,13 +42,17 @@ class FollowerBot():
         try:
             anfragen = self.WaitForObjects(By.CLASS_NAME, "sqdOP.L3NKy.y3zKF")
 
+            follow_buttons = []
+            #wir filtern die bestätigen schnell
+            for x in anfragen:
+                if x.text == "Bestätigen":
+                    follow_buttons.append(x)
             anfragen_count = 0
-            for anfrage in anfragen:
-                if anfrage.text == "Bestätigen":
-                    anfrage.click()
-                    anfragen_count +=1 
-                
-                time.sleep(2)
+            for anfrage in follow_buttons:
+                anfrage.click()
+                anfragen_count +=1    
+                time.sleep(1)
+
             print("{} neue Follower".format(anfragen_count))
 
         except selenium.common.exceptions.TimeoutException:
